@@ -1,0 +1,18 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloud-computing-ingress
+  namespace: kube-system
+  annotations:
+    alb.ingress.kubernetes.io/load-balancer-name: cloud-computing-ingress
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/group.name: common-ingress-group
+spec:
+  ingressClassName: alb
+  defaultBackend:
+    service:
+      name: error
+      port:
+        name: svc-port

@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  mysql_server:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: masterpwd
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+    ports:
+      - "3333:3306"
+
+  cloud-computing-be:
+    container_name: cloud-computing-be
+    restart: always
+    image: cloud-computing/be:v0.0.1
+    # command: sleep infinitely
+    ports:
+      - "3001:3000"
+    environment:
+      DB_HOST: mysql_server
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpassword
+      MYSQL_PORT: 3306

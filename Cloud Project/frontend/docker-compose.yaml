@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  cloud-computing-fe:
+    container_name: cloud-computing-fe
+    restart: always
+    image: cloud-computing/fe:v0.0.1
+    # command: sleep infinitely
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV = development

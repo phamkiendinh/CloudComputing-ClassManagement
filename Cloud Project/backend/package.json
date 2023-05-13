@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "create-react-app": "^1.2.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.2.3",
+    "nodejs": "^0.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "name": "cloud-project",
+  "version": "1.0.0",
+  "main": "tutorial.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "scripts":
+    { 
+        "start": "nodemon server.js"
+    }
+}

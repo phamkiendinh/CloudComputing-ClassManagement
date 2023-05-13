@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-pumi
+  namespace: pumi-prod
+spec:
+  selector:
+    matchLabels:
+      app: be-pumi
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: be-pumi
+    spec:
+      containers:
+        - image: anhminhbo/bits-backend:68
+          name: be-pumi
+
+          envFrom:
+          - configMapRef:
+              name: be-pumi-secret
+          
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: be-pumi
+  namespace: pumi-prod
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  type: ClusterIP
+  selector:
+    app: be-pumi
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: be-pumi
+  namespace: pumi-prod
+  annotations:
+    cert-manager.io/cluster-issuer: "cert-manager-global"
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+    #   proxy_set_header X-Real-IP $remote_addr;
+    #   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #   proxy_set_header X-Forwarded-Proto $scheme; # Adding this for secure https forward to backend
+    #   proxy_set_header Host $http_host;
+
+spec:
+  ingressClassName: nginx
+
+  tls:
+    - hosts:
+        - pumidoro-music.homes
+      secretName: cert-manager-private-key
+  
+  rules:
+    - host: pumidoro-music.homes
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: be-pumi
+                port:
+                  number: 8080
+          

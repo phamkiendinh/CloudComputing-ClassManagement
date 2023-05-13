@@ -1,0 +1,9 @@
+# For infra
+**/.terraform
+**/plan
+**/.terraform.lock.hcl
+**/.terraform.tfstate.lock.info
+
+# Mac
+**.DS_Store**
+**node_modules**
